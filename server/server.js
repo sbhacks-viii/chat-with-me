@@ -89,7 +89,7 @@ const resolvers = {
         },
         users: () => users,
         userByID(parent, {id}) {
-            return users.filter((user) => (user.id) === id)[0];
+            return users.filter((user) => (user.id) == id)[0];
         },
     },
     Mutation: {
