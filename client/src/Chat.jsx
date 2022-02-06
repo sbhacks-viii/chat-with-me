@@ -11,7 +11,7 @@ import {
 } from "@apollo/client";
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
-    Container,  Row, Col, FormInput, Button
+    Container, Row, Col, FormInput, Button
 } from "shards-react"
 
 const link = new WebSocketLink({
@@ -118,8 +118,13 @@ const Chat = () => {
     }
 
     return (
-        <Container>
+        <>
+        <br />
+        <Container style={{overflowY: 'scroll', height: '500px', width: '80%', justifyContent: "center", background: "#D6FFFC"}}>
             <Messages user={state.user} />
+        </Container>
+        <br />
+        <Container style={{flex:1, width: '80%', justifyContent: "center" }}>
             <Row>
                 <Col xs={2} style={{ padding: 0 }}>
                     <FormInput 
@@ -154,6 +159,7 @@ const Chat = () => {
                 </Col>
             </Row>
         </Container>
+        </>
     )
 }
 
