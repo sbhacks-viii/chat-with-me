@@ -76,6 +76,7 @@ const Messages = ({ user }) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
+                                background: "blue",
                             }}
                         >
                             {messageUser.slice(0,2).toUpperCase()}
@@ -128,14 +129,16 @@ const Chat = () => {
 
     return (
         <>
-        <br />
-        <Container style={{overflow:'auto', height: '75vh', width: '80%', background: "#D6FFFC"}}>
-            <br />
+        <Container style={{flex:1, height: '15vh',width: '75%', justifyContent: "center", padding: "5vh"}}>
+            <h1>
+                Chat Room!
+            </h1>
+        </Container>
+        <Container style={{overflowY: 'scroll', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh"}}>
             <Messages user={state.user} />
             <AlwaysScrollToBottom />
         </Container>
-        <br />
-        <Container style={{flex:1, width: '80%', justifyContent: "center" }}>
+        <Container style={{flex:1, height: '15vh', width: '75%', justifyContent: "center", padding: "5vh" }}>
             <Row>
                 <Col xs={2} style={{ padding: 0 }}>
                     <FormInput 
@@ -164,7 +167,7 @@ const Chat = () => {
                     />
                 </Col>
                 <Col xs={2} style={{ padding: 0 }}>
-                    <Button onClick={() => onSend()}>
+                    <Button style={{ width: '100%' }}onClick={() => onSend()}>
                         Send
                     </Button>
                 </Col>
