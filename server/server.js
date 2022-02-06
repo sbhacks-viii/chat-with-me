@@ -1,6 +1,7 @@
 const { GraphQLServer, PubSub } = require('graphql-yoga');
 
 const messages = [];
+var curr_room_messages = [];
 const users = [];
 
 const colors = [
@@ -43,13 +44,14 @@ const colors = [
 "#1bede6", "#8798a4", "#d7790f", "#b2c24f", "#de73c2", "#d70a9c", "#25b67",
 "#88e9b8", "#c2b0e2", "#86e98f", "#ae90e2", "#1a806b", "#436a9e", "#0ec0ff",
 "#f812b3", "#b17fc9", "#8d6c2f", "#d3277a", "#2ca1ae", "#9685eb", "#8a96c6",
-"#dba2e6", "#76fc1b", "#608fa4", "#20f6ba", "#07d7f6", "#dce77a", "#77ecca"]
+"#dba2e6", "#76fc1b", "#608fa4", "#20f6ba", "#07d7f6", "#dce77a", "#77ecca"];
 
 const typeDefs = `
     type Message {
         id: ID!
         user: String!
         content: String!
+        room_id: Int!
     }
 
     type User {
@@ -60,11 +62,13 @@ const typeDefs = `
 
     type Query {
         messages: [Message!]
+        messagesByRoom(room_id: Int!): [Message!]
         users: [User!]
+        userByID(id: ID!): User
     }
 
     type Mutation {
-        postMessage(user: String!, content: String!): ID!
+        postMessage(user: String!, content: String!, room_id: Int!): ID!
         addUser(name: String!): ID!
     }
 
@@ -79,15 +83,23 @@ const onMessagesUpdates = (fn) => subscribers.push(fn);
 const resolvers = {
     Query: {
         messages: () => messages,
+        messagesByRoom(parent, {room_id}) {
+            curr_room_messages = messages.filter((message) => (message.room_id) === room_id);
+            return curr_room_messages;
+        },
         users: () => users,
+        userByID(parent, {id}) {
+            return users.filter((user) => (user.id) === id)[0];
+        },
     },
     Mutation: {
-        postMessage: (parent, {user, content}) => {
+        postMessage: (parent, {user, content, room_id}) => {
             const id = messages.length;
             messages.push({
                 id, 
                 user,
-                content
+                content,
+                room_id
             });
             subscribers.forEach((fn) => fn());
             return id;

@@ -42,10 +42,10 @@ subscription {
 `;
 
 const POST_MESSAGE = gql`
-mutation ($user:String!, $content: String!) {
-    postMessage(user: $user, content: $content)
+mutation ($user:String!, $content: String!, $room_id: Int!) {
+    postMessage(user: $user, content: $content, room_id: $room_id)
 }
-`
+`;
 
 const Messages = ({ user }) => {
     const { data } = useSubscription(GET_MESSAGES);
@@ -109,6 +109,7 @@ const Chat = () => {
     const [state, setState] = useState({
         user: 'Bryan',
         content: '',
+        room_id: 1,
     })
 
     const [postMessage] = useMutation(POST_MESSAGE);
@@ -123,6 +124,7 @@ const Chat = () => {
         setState({
             ...state,
             content: "",
+            room_id: 1,
         });
     }
 
