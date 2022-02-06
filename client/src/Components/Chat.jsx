@@ -76,7 +76,7 @@ const Messages = ({ user }) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                background: "blue",
+                                background: "none",
                             }}
                         >
                             {messageUser.slice(0,2).toUpperCase()}
