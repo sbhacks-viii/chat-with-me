@@ -11,7 +11,7 @@ import {
 } from "@apollo/client";
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
-    Container, Row, Col, FormInput, Button, Badge
+    Container, Row, Col, FormInput, Button
 } from "shards-react"
 
 
@@ -75,7 +75,7 @@ const Messages = ({ user }) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                background: user.color,
+                                background: "none",
                             }}
                         >
                             {messageUser.slice(0,2).toUpperCase()}
@@ -83,7 +83,7 @@ const Messages = ({ user }) => {
                     )}
                     <div
                         style={{
-                            background: user === messageUser ? '#039aff' : '#e5e6ea',
+                            background: user === messageUser ? '#58bf56' : '#e5e6ea',
                             color: user === messageUser ? 'white' : 'black',
                             padding: '1em',
                             borderRadius: '1em',
@@ -115,7 +115,6 @@ const Chat = ({user, roomId}) => {
     const [postMessage] = useMutation(POST_MESSAGE);
 
     const onSend = () => {
-        console.log("about to send",typeof (state.room_id));
         if (state.content.length > 0) {
             postMessage({
                 variables: state,
@@ -134,7 +133,7 @@ const Chat = ({user, roomId}) => {
 
     return (
         <>
-        <Container style={{overflowY: 'auto', height: '70vh', width: '75vw', justifyContent: "center", background: "rgb(255, 255, 255, 0.7)", borderRadius: "3vh", padding: "3vh"}}>
+        <Container style={{overflowY: 'auto', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh", padding: "3vh"}}>
             <Messages user={state.user} />
             <AlwaysScrollToBottom />
         </Container>
@@ -142,7 +141,7 @@ const Chat = ({user, roomId}) => {
             <Row>
                 <Col xs={2} style={{ padding: 0 }}>
                     <FormInput 
-                            label = "User"
+                            label = "Content"
                             value={state.user}
                             onChange={(evt) => setState({
                                 ...state, 

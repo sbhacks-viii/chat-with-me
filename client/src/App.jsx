@@ -8,12 +8,14 @@ import "./index.css";
 import Chat from './Components/Chat';
 import LandingPage from './Components/LandingPage';
 
+
 const App = () => {
     const [user, setUser] = useState(null);
     const [roomId, setRoomId] = useState(-Infinity);
+
     return (
         <>
-        {(!user || roomId===-Infinity) ? <LandingPage setUser={setUser} setRoomId={setRoomId}/> : <Chat user={user} roomId={roomId}/>}
+        {(!user || roomId===-Infinity) ? <LandingPage user={user} roomId={roomId} setUser={setUser} setRoomId={setRoomId}/> : <Chat user={user} roomId={roomId}/>}
         </>
     )
 }

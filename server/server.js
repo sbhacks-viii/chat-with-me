@@ -11,25 +11,23 @@ const typeDefs = `
         content: String!
         room_id: Int!
     }
-
     type User {
         id: ID!
         name: String!
         color: Int!
+        room_id: Int!
     }
-
     type Query {
         messages: [Message!]
         messagesByRoom(room_id: Int!): [Message!]
         users: [User!]
         userByID(id: ID!): User
+        userByRoom(room_id: Int!): [User!]
     }
-
     type Mutation {
         postMessage(user: String!, content: String!, room_id: Int!): ID!
-        addUser(name: String!): ID!
+        addUser(name: String!, room_id: Int!): ID!
     }
-
     type Subscription {
         messages: [Message!]
     }
@@ -49,6 +47,9 @@ const resolvers = {
         userByID(parent, {id}) {
             return users.filter((user) => (user.id) == id)[0];
         },
+        userByRoom(parent, {room_id}) {
+            return users.filter((user) => (user.room_id) == room_id);
+        },
     },
     Mutation: {
         postMessage: (parent, {user, content, room_id}) => {
@@ -62,13 +63,14 @@ const resolvers = {
             subscribers.forEach((fn) => fn());
             return id;
         },
-        addUser: (parent, {name}) => {
+        addUser: (parent, {name, room_id}) => {
             const id = users.length;
             const color = id % 280; // 280 is colors.length
             users.push({
                 id, 
                 name,
-                color
+                color,
+                room_id
             });
             return id;
         },
