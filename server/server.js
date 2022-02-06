@@ -30,6 +30,7 @@ const typeDefs = `
     }
     type Subscription {
         messages: [Message!]
+        messagesByRoom(room_id: Int!): [Message!]
     }
 `;
 
@@ -82,9 +83,31 @@ const resolvers = {
                 const channel = Math.random().toString(36).slice(2,15);
                 onMessagesUpdates(() => pubsub.publish(channel, { messages }));
                 setTimeout(() => pubsub.publish(channel, { messages }), 0);
+                console.log(pubsub.asyncIterator(channel))
+                return pubsub.asyncIterator(channel);
+            }
+        },
+        messagesByRoom: {
+            subscribe: (parent, args, { pubsub }) => {
+                const {room_id} = args;
+                const curr_room = messages.filter((message) => (message.room_id) === room_id);
+                const channel = Math.random().toString(36).slice(2,15);
+                onMessagesUpdates(() => pubsub.publish(channel, { curr_room }));
+                setTimeout(() => pubsub.publish(channel, { curr_room }), 0);
                 return pubsub.asyncIterator(channel);
             }
         }
+        // messagesByRoom: {
+        //     subscribe: (parent, args, { pubsub }) => {
+        //         const {room_id} = args;
+        //         curr_room_messages = messages.filter((message) => (message.room_id) === room_id);
+        //         console.log(messages, curr_room_messages)
+        //         const channel = Math.random().toString(36).slice(2,15);
+        //         onMessagesUpdates(() => pubsub.publish(channel, { curr_room_messages }));
+        //         setTimeout(() => pubsub.publish(channel, { curr_room_messages }), 0);
+        //         return pubsub.asyncIterator(channel);
+        //     }
+        // }
     }
 };
 
