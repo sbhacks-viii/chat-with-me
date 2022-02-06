@@ -21,7 +21,7 @@ const typeDefs = `
         messages: [Message!]
         messagesByRoom(room_id: Int!): [Message!]
         users: [User!]
-        userByID(id: ID!): User
+        userByUsernameAndRoom(name: String!, room_id: Int!): User
         userByRoom(room_id: Int!): [User!]
     }
     type Mutation {
@@ -45,8 +45,8 @@ const resolvers = {
             return curr_room_messages;
         },
         users: () => users,
-        userByID(parent, {id}) {
-            return users.filter((user) => (user.id) == id)[0];
+        userByUsernameAndRoom(parent, {name, room_id}) {
+            return users.filter((user) => (user.name === name && user.room_id == room_id))[0];
         },
         userByRoom(parent, {room_id}) {
             return users.filter((user) => (user.room_id) == room_id);

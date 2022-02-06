@@ -75,7 +75,7 @@ const LandingPage = ( { user, roomId, setUser, setRoomId } ) => {
                             style={{ height: '400px', width: '500px' }}
                             />
 
-                        <TextField name="name" onChange={handleChange} variant="outlined" required fullWidth label="name" autoFocus={true} type="text" style={{margin: '10px'}}/>
+                        <TextField name="name" onChange={handleChange} variant="outlined" required fullWidth label="username" autoFocus={true} type="text" style={{margin: '10px'}}/>
 
                         <TextField name="room_id" onChange={handleChange} variant="outlined" required fullWidth label="room ID to join" autoFocus={false} type="number" style={{margin: '10px'}}/>
                     </Grid>
