@@ -1,4 +1,4 @@
-import React, { useState } from'react';
+import React, { useState, useEffect, useRef } from'react';
 
 import {
     ApolloClient,
@@ -14,12 +14,14 @@ import {
     Container, Row, Col, FormInput, Button
 } from "shards-react"
 
+
+
 const link = new WebSocketLink({
     uri: `ws://localhost:4000/`,
     options: {
-      reconnect: true
+        reconnect: true
     }
-  });
+});
 
 
 const client = new ApolloClient({
@@ -97,6 +99,12 @@ const Messages = ({ user }) => {
     );
 }
 
+const AlwaysScrollToBottom = () => {
+    const elementRef = useRef();
+    useEffect(() => elementRef.current.scrollIntoView());
+    return <div ref={elementRef} />;
+};
+
 const Chat = () => {
     const [state, setState] = useState({
         user: 'Bryan',
@@ -118,6 +126,7 @@ const Chat = () => {
         });
     }
 
+
     return (
         <>
         <Container style={{flex:1, height: '15vh',width: '75%', justifyContent: "center", padding: "5vh"}}>
@@ -127,6 +136,7 @@ const Chat = () => {
         </Container>
         <Container style={{overflowY: 'scroll', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh"}}>
             <Messages user={state.user} />
+            <AlwaysScrollToBottom />
         </Container>
         <Container style={{flex:1, height: '15vh', width: '75%', justifyContent: "center", padding: "5vh" }}>
             <Row>
