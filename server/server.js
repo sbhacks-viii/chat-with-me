@@ -11,14 +11,12 @@ const typeDefs = `
         content: String!
         room_id: Int!
     }
-
     type User {
         id: ID!
         name: String!
         color: Int!
         room_id: Int!
     }
-
     type Query {
         messages: [Message!]
         messagesByRoom(room_id: Int!): [Message!]
@@ -26,12 +24,10 @@ const typeDefs = `
         userByID(id: ID!): User
         userByRoom(room_id: Int!): [User!]
     }
-
     type Mutation {
         postMessage(user: String!, content: String!, room_id: Int!): ID!
         addUser(name: String!, room_id: Int!): ID!
     }
-
     type Subscription {
         messages: [Message!]
     }

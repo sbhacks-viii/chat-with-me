@@ -140,7 +140,15 @@ const Chat = ({user, roomId}) => {
         <Container style={{flex:1, height: '15vh', width: '75%', justifyContent: "center", padding: "5vh" }}>
             <Row>
                 <Col xs={2} style={{ padding: 0 }}>
-                    <p>{state.user}</p>
+                    <FormInput 
+                            label = "Content"
+                            value={state.user}
+                            onChange={(evt) => setState({
+                                ...state, 
+                            })}
+                            disabled
+                            style={{cursor: 'default'}}
+                        />
                 </Col>
                 <Col xs={8}>
                     <FormInput 
