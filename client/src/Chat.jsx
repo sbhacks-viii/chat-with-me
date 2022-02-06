@@ -134,7 +134,7 @@ const Chat = () => {
                 Chat Room!
             </h1>
         </Container>
-        <Container style={{overflowY: 'scroll', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh"}}>
+        <Container style={{overflowY: 'auto', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh"}}>
             <Messages user={state.user} />
             <AlwaysScrollToBottom />
         </Container>
