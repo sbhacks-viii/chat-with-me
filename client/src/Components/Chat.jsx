@@ -115,7 +115,6 @@ const Chat = ({user, roomId}) => {
     const [postMessage] = useMutation(POST_MESSAGE);
 
     const onSend = () => {
-        console.log("about to send",typeof (state.room_id));
         if (state.content.length > 0) {
             postMessage({
                 variables: state,
