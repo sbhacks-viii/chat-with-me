@@ -11,7 +11,7 @@ import {
 } from "@apollo/client";
 import { WebSocketLink } from '@apollo/client/link/ws';
 import {
-    Container, Row, Col, FormInput, Button
+    Container, Row, Col, FormInput, Button, Badge
 } from "shards-react"
 
 
@@ -75,7 +75,7 @@ const Messages = ({ user }) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                background: "none",
+                                background: user.color,
                             }}
                         >
                             {messageUser.slice(0,2).toUpperCase()}
@@ -83,7 +83,7 @@ const Messages = ({ user }) => {
                     )}
                     <div
                         style={{
-                            background: user === messageUser ? '#58bf56' : '#e5e6ea',
+                            background: user === messageUser ? '#039aff' : '#e5e6ea',
                             color: user === messageUser ? 'white' : 'black',
                             padding: '1em',
                             borderRadius: '1em',
@@ -134,14 +134,22 @@ const Chat = ({user, roomId}) => {
 
     return (
         <>
-        <Container style={{overflowY: 'auto', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh", padding: "3vh"}}>
+        <Container style={{overflowY: 'auto', height: '70vh', width: '75vw', justifyContent: "center", background: "rgb(255, 255, 255, 0.7)", borderRadius: "3vh", padding: "3vh"}}>
             <Messages user={state.user} />
             <AlwaysScrollToBottom />
         </Container>
         <Container style={{flex:1, height: '15vh', width: '75%', justifyContent: "center", padding: "5vh" }}>
             <Row>
                 <Col xs={2} style={{ padding: 0 }}>
-                    <p>{state.user}</p>
+                    <FormInput 
+                            label = "User"
+                            value={state.user}
+                            onChange={(evt) => setState({
+                                ...state, 
+                            })}
+                            disabled
+                            style={{cursor: 'default'}}
+                        />
                 </Col>
                 <Col xs={8}>
                     <FormInput 
