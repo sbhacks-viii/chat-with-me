@@ -32,11 +32,11 @@ const client = new ApolloClient({
 
 
 const GET_MESSAGES = gql`
-subscription {
-    messages {
+query ($room_id: Int!){
+    messagesByRoom(room_id: $room_id) {
         id
-        content
         user
+        content
     }
 }
 `;
@@ -47,14 +47,22 @@ mutation ($user:String!, $content: String!, $room_id: Int!) {
 }
 `;
 
-const Messages = ({ user }) => {
-    const { data } = useSubscription(GET_MESSAGES);
+const Messages = ({ user, roomId }) => {
+    console.log("roomid", roomId)
+    console.log("user", user)
+    const { data } = useQuery(GET_MESSAGES, {
+        variables: { room_id: roomId },
+        pollInterval: 500,
+    });
+    console.log("data", data)
+    // const { data } = useQuery(GET_MESSAGES, {room_id: roomId}, {pollInterval: 500});
+
     if (!data) {
         return  null;
     }
     return (
         <>
-            {data.messages.map(({id, user: messageUser, content}) => (
+            {data.messagesByRoom.map(({id, user: messageUser, content}) => (
                 <div
                     style={{
                         display: 'flex',
@@ -134,7 +142,7 @@ const Chat = ({user, roomId}) => {
     return (
         <>
         <Container style={{overflowY: 'auto', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh", padding: "3vh"}}>
-            <Messages user={state.user} />
+            <Messages user={state.user}  roomId={roomId}/>
             <AlwaysScrollToBottom />
         </Container>
         <Container style={{flex:1, height: '15vh', width: '75%', justifyContent: "center", padding: "5vh" }}>
