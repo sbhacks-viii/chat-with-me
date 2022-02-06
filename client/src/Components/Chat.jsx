@@ -105,8 +105,7 @@ const AlwaysScrollToBottom = () => {
 };
 
 const Chat = ({user, roomId}) => {
-    console.log("user: ", roomId);
-    console.log("room number: ",roomId)
+    roomId = parseInt(roomId);
     const [state, setState] = useState({
         user: user,
         content: '',
@@ -116,17 +115,20 @@ const Chat = ({user, roomId}) => {
     const [postMessage] = useMutation(POST_MESSAGE);
 
     const onSend = () => {
+        console.log("about to send",typeof (state.room_id));
         if (state.content.length > 0) {
             postMessage({
                 variables: state,
             });
         }
 
+        console.log(typeof (state.room_id));
         setState({
             ...state,
             content: "",
             room_id: roomId,
         });
+        console.log(typeof (state.room_id));
     }
 
 
@@ -139,15 +141,7 @@ const Chat = ({user, roomId}) => {
         <Container style={{flex:1, height: '15vh', width: '75%', justifyContent: "center", padding: "5vh" }}>
             <Row>
                 <Col xs={2} style={{ padding: 0 }}>
-                    <FormInput 
-                        label = "User"
-                        value={state.user}
-                        onChange={(evt) => setState({
-                            // TODO: CHANGE LATER FOR USER BASE
-                            ...state, 
-                            user: evt.target.value,
-                        })}
-                    />
+                    <p>{state.user}</p>
                 </Col>
                 <Col xs={8}>
                     <FormInput 

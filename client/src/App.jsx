@@ -10,10 +10,10 @@ import LandingPage from './Components/LandingPage';
 
 const App = () => {
     const [user, setUser] = useState(null);
-    const [roomId, setRoomId] = useState(0);
+    const [roomId, setRoomId] = useState(-Infinity);
     return (
         <>
-        {(!user && !roomId) ? <LandingPage /> : <Chat />}
+        {(!user || roomId===-Infinity) ? <LandingPage setUser={setUser} setRoomId={setRoomId}/> : <Chat user={user} roomId={roomId}/>}
         </>
     )
 }
