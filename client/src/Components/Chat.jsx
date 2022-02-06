@@ -49,7 +49,6 @@ mutation ($user:String!, $content: String!, $room_id: Int!) {
 
 const Messages = ({ user }) => {
     const { data } = useSubscription(GET_MESSAGES);
-    console.log("inside messages", data);
     if (!data) {
         return  null;
     }
@@ -105,11 +104,13 @@ const AlwaysScrollToBottom = () => {
     return <div ref={elementRef} />;
 };
 
-const Chat = () => {
+const Chat = ({user, roomId}) => {
+    console.log("user: ", roomId);
+    console.log("room number: ",roomId)
     const [state, setState] = useState({
-        user: 'Bryan',
+        user: user,
         content: '',
-        room_id: 1,
+        room_id: roomId,
     })
 
     const [postMessage] = useMutation(POST_MESSAGE);
@@ -124,18 +125,13 @@ const Chat = () => {
         setState({
             ...state,
             content: "",
-            room_id: 1,
+            room_id: roomId,
         });
     }
 
 
     return (
         <>
-        <Container style={{flex:1, height: '15vh',width: '75%', justifyContent: "center", padding: "5vh"}}>
-            <h1>
-                Chat Room!
-            </h1>
-        </Container>
         <Container style={{overflowY: 'auto', height: '70vh', width: '75vw', justifyContent: "center", background: "#D6FFFC", borderRadius: "3vh", padding: "3vh"}}>
             <Messages user={state.user} />
             <AlwaysScrollToBottom />
@@ -179,8 +175,25 @@ const Chat = () => {
     )
 }
 
-export default () => (
+const RoomName = ({roomId}) => {
+    return (
+        <Container
+            style={{
+                flex: 1,
+                height: "15vh",
+                width: "75%",
+                justifyContent: "center",
+                padding: "5vh",
+            }}
+        >
+            <h1>{`Chat Room ${roomId}!`}</h1>
+        </Container>
+    );
+}
+
+export default ({user, roomId}) => (
     <ApolloProvider client={client}>
-        <Chat/>
+        <RoomName roomId={roomId}/>
+        <Chat user={user} roomId={roomId}/>
     </ApolloProvider>
 )
