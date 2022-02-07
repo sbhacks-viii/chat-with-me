@@ -3,6 +3,14 @@
 Watch the demo video here: https://youtu.be/BVzAhW2hG0M       
 Read the devpost here: https://devpost.com/software/chat-with-me-8rj1f3
 
+## Usage Instructions
+- Download the github repository
+- Open two terminals for github repository
+- In terminal 1, do the following command: `cd client && yarn && yarn start`
+- In terminal 2, do the following command: `cd server && yarn && yarn start`
+- Application will open in http://localhost:8080/ 
+- Restart server terminal to clear all chat logs
+
 ## Inspiration
 Initially, we struggled to collaborate together as a team as we had no direct way to communicate with each other. Then, we asked ourselves, "What if there was a way we could message each other virtually?" The question became a mission, and we're proud to present Chat With Me, a messaging web app for passionate individuals looking to streamline their creativity.
 ## What it does
